@@ -310,3 +310,5 @@ AI 给你写一封手写信，写在点阵手账里。便利贴贴着你的原�
 > 知道自己想要什么，并且一定要亲手把它做出来。
 
 你也试试，看看在 AI 眼里，你是什么样的人。
+
+b站视频链接：https://www.bilibili.com/video/BV1t4pL6JEoR/?spm_id_from=333.1387.homepage.video_card.click&vd_source=d7fb044587d6a6e1a5b56368cb1ea36f
