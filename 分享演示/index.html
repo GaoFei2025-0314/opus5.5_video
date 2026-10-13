@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="用 Opus 5.5 做视频：12 版真实作品、创作流程与可复制提示词的互动分享。">
+  <title>用 Opus 5.5 做视频 · 高飞</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23e94835'/%3E%3Ctext x='50' y='70' font-size='65' text-anchor='middle' fill='white'%3E影%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a href="#1" class="brand">GF<span> / </span>创作实录</a><span class="top-topic">OPUS 5.5 × VIDEO</span><div class="top-actions"><button id="overview" title="目录（O）">目录 <kbd>O</kbd></button><button id="notes-toggle" aria-expanded="false" title="讲者备注（N）">备注 <kbd>N</kbd></button><button id="fullscreen" title="全屏（F）">全屏 <kbd>F</kbd></button></div></header>
+  <main id="viewport" aria-label="互动演示文稿">
+    <div id="stage">
+      <section class="slide cover dark" data-title="用 Opus 5.5 做视频" aria-labelledby="title-1">
+        <div class="eyebrow">高飞的 AI 创作分享 · 2026.10.13</div>
+        <div class="cover-copy"><p class="edition">OPUS 5.5 / VIDEO EXPERIMENT</p><h1 id="title-1">一句话，<br>十二种<span class="red">「我」</span>。</h1><p class="lead">用 Opus 5.5 做视频</p><p class="muted">一段真实经历，12 支短片，一次关于表达的实验。</p><button class="primary" data-goto="3">进入放映 <span>↗</span></button></div>
+        <div class="cover-art" aria-label="快闪、水墨与像素风格的成片画面"><figure class="cover-frame frame-one"><img src="assets/v11.jpg" alt="快闪版三维文字空间"><figcaption>11 / 快闪</figcaption></figure><figure class="cover-frame frame-two"><img src="assets/v10.jpg" alt="江城版水墨画面"><figcaption>10 / 江城</figcaption></figure><figure class="cover-frame frame-three"><img src="assets/v8.jpg" alt="冒险版像素游戏画面"><figcaption>08 / 冒险</figcaption></figure></div>
+        <div class="cover-bottom"><span>真实素材 · 可播放片段 · 可复制提示词</span><span>15 MIN / 15 SLIDES</span></div>
+      </section>
+
+      <section class="slide paper" data-title="故事从一个问题开始" aria-labelledby="title-2" hidden>
+        <div class="eyebrow">01 / 一个起点</div><h2 id="title-2">我只是想问它一句：</h2>
+        <blockquote class="question">在你的视角里，<br>我是一个什么样的人<span class="red">？</span></blockquote>
+        <div class="stat-row"><div><strong>147<span> 天</span></strong><p>与 AI 对话</p></div><div><strong>1,319<span> 条</span></strong><p>留下的消息</p></div><div><strong>12<span> 个</span></strong><p>一起做过的项目</p></div></div>
+        <p class="bottom-caption">把聊天记录、笔记、项目和头像交给它，让它用视频回答。<span>数据引自本项目创作记录</span></p>
+      </section>
+
+      <section class="slide dark" data-title="12 版作品放映室" aria-labelledby="title-3" hidden>
+        <div class="eyebrow">02 / 先看成片</div><div class="heading-row"><h2 id="title-3">同一个故事，十二种表达。</h2><span class="small muted">点击版本，播放本地片段</span></div>
+        <div class="screening"><div class="version-menu" id="version-menu" aria-label="选择作品版本"></div><div class="screening-main"><video id="screening-video" controls playsinline preload="none" aria-label="当前作品片段"></video><div class="screening-caption"><div><h3 id="screening-title"></h3><p id="screening-description"></p></div><button class="text-button" id="screening-detail">截图与完整提示词 ↗</button></div></div></div>
+        <p class="bottom-caption" id="screening-meta"></p>
+      </section>
+
+      <section class="slide paper" data-title="这次项目怎样做出视频" aria-labelledby="title-4" hidden>
+        <div class="eyebrow">03 / 制作流程</div><h2 id="title-4">让 AI 写出视频，<br>让自己决定表达。</h2>
+        <div class="pipeline"><div><span>01</span><h3>给资料</h3><p>聊天、笔记、项目、头像<br>提供真实内容</p></div><div><span>02</span><h3>定叙事</h3><p>找到故事线与原话<br>决定讲什么</p></div><div><span>03</span><h3>做样片</h3><p>画面、声音、节奏<br>先看关键帧或短片</p></div><div><span>04</span><h3>出成片</h3><p>核对内容与配音<br>确认后渲染 MP4</p></div></div>
+        <div class="bottom-statement"><strong>本项目使用 Claude Code</strong><span>读取文件、编写动画代码，结合 Remotion 等工具渲染视频。</span></div>
+      </section>
+
+      <section class="slide dark split" data-title="真正有用的素材" aria-labelledby="title-5" hidden>
+        <div class="split-copy"><div class="eyebrow">04 / 准备素材</div><h2 id="title-5">打动人的，<br>是你留下的<span class="red">痕迹</span>。</h2><p class="lead">先准备一个「关于我」的文件夹。</p><div class="material-list"><div><span>01</span><p><strong>聊天记录</strong>具体原话与日期</p></div><div><span>02</span><p><strong>笔记 / 知识库</strong>想法与在意的事</p></div><div><span>03</span><p><strong>项目记录</strong>真正做出来的东西</p></div><div><span>04</span><p><strong>一张头像</strong>贯穿短片的主角</p></div></div></div>
+        <figure class="full-figure"><img src="assets/v9.jpg" alt="见字如面版本，将个人经历呈现在手账中"><figcaption>V9《见字如面》 / 让真实内容进入画面</figcaption></figure>
+        <p class="bottom-caption">统计活跃时间只需时间字段；引用原话另行核对原文与日期。分享前选好可以公开的内容。</p>
+      </section>
+
+      <section class="slide paper" data-title="第一条提示词" aria-labelledby="title-6" hidden>
+        <div class="eyebrow">05 / 开始制作</div><h2 id="title-6">第一条提示词，先说清楚想要什么。</h2>
+        <div class="prompt-layout"><div class="prompt-paper"><div class="prompt-label">起步提示词 · 分享版</div><p>请根据我的资料，制作一条视频：<br><strong>在你的视角里，我是什么样的人。</strong></p><p>资料在：<span class="red">【聊天记录】【笔记】【项目】【头像】</span></p><p>用真实数据和原话，引用标日期并核对。<br>时长、画面、声音和技术方案由你决定。</p><p class="prompt-emphasis">先给我看几张关键帧，<br>确认方向后再渲染整片。</p><button class="copy-button" data-copy="starter">复制这条提示词 ↗</button></div><div class="margin-notes"><div><span>明确目标</span><p>它在替谁讲，讲什么。</p></div><div><span>提供依据</span><p>路径、数据、原话。</p></div><div><span>设置检查点</span><p>先看得见，再做完整。</p></div></div></div>
+      </section>
+
+      <section class="slide dark" data-title="12 版的迭代路线" aria-labelledby="title-7" hidden>
+        <div class="eyebrow">06 / 怎么迭代</div><h2 id="title-7">每一轮，明确这次要改变什么。</h2><p class="lead">先有一版，再逐步改变声音、画面和风格。</p>
+        <div class="evolution"><div><img src="assets/v1.jpg" alt="第一版文字与配乐"><span>V1</span><h3>建立故事</h3><p>文字 + 配乐<br>先把叙事讲通</p></div><div><img src="assets/v3.jpg" alt="双声版画面"><span>V2 — V4</span><h3>改变声音</h3><p>女声 → 双声 → 男声<br>画面基本沿用</p></div><div><img src="assets/v5.jpg" alt="点线面体版画面"><span>V5 — V6</span><h3>重做画面与节奏</h3><p>点线面体 → 宏伟版<br>探索空间与冲击</p></div><div><img src="assets/v12.jpg" alt="漫画版画面"><span>V7 — V12</span><h3>探索风格</h3><p>字 / RPG / 手账 / 水墨<br>快闪 / 漫画</p></div></div>
+        <p class="bottom-caption">改动前说清楚：哪些保留，哪些重做。已有版本留着，随时可以比较或回退。</p>
+      </section>
+
+      <section class="slide paper" data-title="声音也在讲故事" aria-labelledby="title-8" hidden>
+        <div class="eyebrow">07 / 声音实验</div><h2 id="title-8">声音，决定是谁在讲这个故事。</h2><div class="audio-layout"><div><div class="sound-options" id="sound-options" aria-label="选择声音版本"></div><div class="sound-note"><h3>配音的检查方法</h3><p>逐句合成 → 转写回来 → 对照原稿。<br>多音字、人名、英文单独听一遍。<br>只重做读错的句子。</p></div></div><div><video id="sound-video" controls playsinline preload="none" aria-label="声音版本示例"></video><p class="small" id="sound-description"></p></div></div>
+        <p class="bottom-caption">旁白响起时给配乐让出空间；使用本人或已获授权的音色。此处片段取自各版相同时间附近，内容不保证逐句对齐。</p>
+      </section>
+
+      <section class="slide dark" data-title="六种风格的视觉语法" aria-labelledby="title-9" hidden>
+        <div class="eyebrow">08 / 风格实验</div><div class="heading-row"><h2 id="title-9">风格，是一套贯穿全片的规则。</h2><span class="small muted">点击画面，查看提示词</span></div><div class="style-grid" id="style-grid"></div>
+      </section>
+
+      <section class="slide paper" data-title="先出样片，再做整片" aria-labelledby="title-10" hidden>
+        <div class="eyebrow">09 / 先做选择</div><h2 id="title-10">拿不准风格，就让同一场景试四次。</h2><div class="study-layout"><figure><button class="image-button" id="open-studies" aria-label="放大查看四种风格样片"><img src="assets/style-studies.jpg" alt="江城制作时的四种风格样片：扁平插画、纸雕、水墨、全息科幻"></button><figcaption>V10 制作时保留的真实风格样片 · 点击放大</figcaption></figure><div><blockquote>“用同一个场景，<br>出四种风格的样片。”</blockquote><p>先比较气质、可读性与故事适配度，<br>再决定整片的方向。</p><div class="decision"><span>这一次的选择</span><strong>水墨长卷</strong><p>城市、江水、留白、朱批，<br>成为同一套表达语言。</p></div><button class="text-button" data-detail="10">查看《江城》的完整提示词 ↗</button></div></div>
+      </section>
+
+      <section class="slide dark" data-title="节奏要落到画面上" aria-labelledby="title-11" hidden>
+        <div class="eyebrow">10 / 节奏实验</div><div class="beat-layout"><div><h2 id="title-11">想要“有冲击”，<br>就把节奏说具体。</h2><div class="beat-number">150<span>BPM</span></div><p class="lead">V11《快闪》 / 30 帧每秒</p><div class="beat-math"><div><strong>12 帧</strong><span>一个节拍</span></div><div><strong>0.2 秒</strong><span>一个八分音符</span></div></div><p class="muted">点 → 线 → 面 → 体<br>每升一维，加一层音乐；重拍前留出短暂安静。</p></div><div class="beat-media"><video id="beat-video" src="assets/v11.mp4" poster="assets/v11.jpg" controls playsinline preload="none" aria-label="快闪节奏片段"></video><p class="small muted">播放 16 秒片段，观察文字、镜头与重拍的关系。</p><button class="text-button" data-detail="11">拆开这条提示词 ↗</button></div></div>
+      </section>
+
+      <section class="slide paper" data-title="怎样给出有效反馈" aria-labelledby="title-12" hidden>
+        <div class="eyebrow">11 / 继续对话</div><h2 id="title-12">不必先懂术语，先指出不满意的地方。</h2><div class="feedback-tabs" id="feedback-tabs" aria-label="选择反馈场景"></div><div class="feedback-body"><div><p class="label">先说出感受</p><blockquote id="feedback-quote"></blockquote></div><div><p class="label">再补一条可执行的要求</p><h3 id="feedback-action"></h3><p id="feedback-explain"></p><button class="copy-button" id="copy-feedback">复制这条反馈 ↗</button></div></div><p class="bottom-caption">感受可以作为起点；说清楚哪一段、哪里不对、希望怎样变化，下一轮就更容易判断。</p>
+      </section>
+
+      <section class="slide dark" data-title="现场组装你的提示词" aria-labelledby="title-13" hidden>
+        <div class="eyebrow">12 / 轮到你了</div><h2 id="title-13">选一种表达，带走一条提示词。</h2><div class="builder-layout"><div><label class="field-label" for="material-path">你的素材文件夹</label><input id="material-path" value="【我的素材文件夹路径】" autocomplete="off" spellcheck="false"><p class="field-label">你想让它怎样讲？</p><div class="builder-options" id="builder-options" aria-label="选择提示词风格"></div><p class="small muted">路径只用于生成文字，不会读取或上传文件。</p><button class="primary" id="copy-built">复制我的提示词 <span>↗</span></button></div><div class="built-prompt"><div class="prompt-label">可直接修改 / 复制到 Claude Code</div><textarea id="built-prompt" aria-label="生成的可编辑提示词" spellcheck="false"></textarea></div></div>
+      </section>
+
+      <section class="slide paper" data-title="今晚就能开始的四步" aria-labelledby="title-14" hidden>
+        <div class="eyebrow">13 / 带回去试试</div><h2 id="title-14">今天回去，先做一支小样。</h2><div class="takeaway"><div><span>01</span><h3>整理一份资料</h3><p>挑你愿意分享的记录，<br>留下能讲出故事的原话。</p></div><div><span>02</span><h3>只选一个主题</h3><p>个人回顾、项目故事，<br>或写给未来的自己。</p></div><div><span>03</span><h3>先看关键帧</h3><p>需要判断节奏时，<br>先做 15 秒样片。</p></div><div><span>04</span><h3>带着反馈迭代</h3><p>核对原话与声音，<br>方向对了再做整片。</p></div></div><div class="closing-line">你负责判断<span class="red">「像不像你」</span>，让 AI 去完成下一轮尝试。</div>
+      </section>
+
+      <section class="slide dark end-slide" data-title="把想法做出来" aria-labelledby="title-15" hidden>
+        <div class="eyebrow">14 / 交流与提问</div><p class="ending-intro">最后，AI 在片子里给我的答案是：</p><h2 id="title-15">知道自己想要什么，<br>并且一定要亲手<br><span class="red">把它做出来。</span></h2><div class="ending-bottom"><p>你想让 AI，替你讲一个什么故事？</p><div><button class="text-button" data-goto="3">回到作品放映室 ↗</button><a href="https://www.bilibili.com/video/BV1t4pL6JEoR/" target="_blank" rel="noopener noreferrer">完整视频 · B 站 ↗</a><a href="https://github.com/GaoFei2025-0314/opus5.5_video" target="_blank" rel="noopener noreferrer">项目与提示词 · GitHub ↗</a></div></div><span class="end-signature">高飞 / 2026.10.13</span>
+      </section>
+    </div>
+  </main>
+  <footer class="controls"><span id="chapter-name">用 Opus 5.5 做视频</span><div id="progress-dots" aria-label="幻灯片页码"></div><div class="page-controls"><button id="prev" aria-label="上一页">←</button><span id="page-count" aria-live="polite">01 / 15</span><button id="next" aria-label="下一页">→</button></div></footer>
+  <aside id="speaker-notes" hidden aria-label="讲者备注"><div><strong id="note-heading"></strong><button id="close-notes" aria-label="关闭备注">×</button></div><p id="note-content"></p><small id="note-source"></small></aside>
+  <dialog id="contents-dialog" aria-labelledby="contents-title"><div class="dialog-heading"><h2 id="contents-title">分享目录</h2><button data-close aria-label="关闭目录">×</button></div><div id="contents-grid"></div><p class="dialog-hint">← → 翻页 · O 目录 · N 备注 · F 全屏 · Esc 关闭弹窗</p></dialog>
+  <dialog id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-heading"><div><p class="label" id="detail-meta"></p><h2 id="detail-title"></h2></div><button data-close aria-label="关闭详情">×</button></div><div class="detail-layout"><div><video id="detail-video" controls playsinline preload="none" aria-label="作品预览"></video><img id="detail-sheet" alt="当前作品的完整截图拼图"><p id="media-error" hidden>片段未能加载。请确认 assets 文件夹与 HTML 位于同一目录，或前往 B 站观看完整视频。</p></div><div><p id="detail-description"></p><button id="copy-detail" class="copy-button">复制完整提示词 ↗</button><p class="small muted">原文中的【】请替换成自己的信息。V2–V6 为接续已有版本的提示词。</p><textarea id="detail-prompt" aria-label="该版本的完整提示词" readonly></textarea></div></div></dialog>
+  <dialog id="image-dialog" aria-labelledby="image-title"><div class="dialog-heading"><h2 id="image-title">同一场景的四种风格样片</h2><button data-close aria-label="关闭图片">×</button></div><img src="assets/style-studies.jpg" alt="扁平插画、纸雕书、水墨、全息科幻四种风格样片"></dialog>
+  <div id="toast" role="status" hidden></div>
+  <noscript><p class="noscript">请启用 JavaScript 使用翻页、视频选择和提示词复制。</p></noscript>
+</body>
+</html>
