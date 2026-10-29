@@ -1,0 +1,9 @@
+{
+  "text": "第一版，先把故事讲清楚。再加入女声，分开人工智能旁白和自己的原话，然后尝试男声。同一段内容，换一种声音，距离感就变了。",
+  "voice": "zh-CN-YunxiNeural",
+  "rate": "+3%",
+  "pitch": "-2Hz",
+  "fingerprint": "c0d224a6d14a9d09752e354c1b5852870ed54a80c53718bf9293ed5ca1bb53d6",
+  "provider": "Microsoft Edge online TTS",
+  "disclosure": "AI-generated narration"
+}
