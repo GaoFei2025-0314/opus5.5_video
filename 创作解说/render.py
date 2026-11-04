@@ -93,16 +93,17 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def captions(scene, voice_dir):
     if not scene["text"]:
         return []
-    metadata = [json.loads(line) for line in (voice_dir / f"{scene['id']}.jsonl").read_text().splitlines()]
     char_times = []
-    for word in metadata:
-        if word["type"] != "WordBoundary":
-            continue
-        letters = re.sub(r"[\s，。！？：；、]", "", word["text"])
-        if not letters:
-            continue
-        a, d = word["offset"] / 1e7, word["duration"] / 1e7
-        char_times.extend((a + i * d / len(letters), a + (i + 1) * d / len(letters)) for i in range(len(letters)))
+    manifest = json.loads((voice_dir / f"{scene['id']}.json").read_text())
+    if manifest.get("text") != scene["text"] or manifest.get("voice") != "gaofei":
+        raise ValueError(f"Stale text or wrong speaker for {scene['id']}; regenerate gaofei narration")
+    alignment = manifest["alignment"]
+    if len({len(alignment[key]) for key in ["characters", "character_start_times_seconds", "character_end_times_seconds"]}) != 1:
+        raise ValueError(f"Incomplete character timing for {scene['id']}")
+    for char, start, end in zip(alignment["characters"], alignment["character_start_times_seconds"],
+                                alignment["character_end_times_seconds"]):
+        if re.sub(r"[\s，。！？：；、]", "", char):
+            char_times.append((start, end))
     clean = re.sub(r"[\s，。！？：；、]", "", scene["text"])
     if len(clean) != len(char_times):
         raise ValueError(f"Timing character mismatch in {scene['id']}: {len(clean)} != {len(char_times)}")
@@ -119,6 +120,10 @@ def captions(scene, voice_dir):
         group = group.replace("奥普斯五点五", "Opus 5.5").replace("克劳德代码工具", "Claude Code")
         result.append([start, min(end, scene["duration"] - 0.05), group])
         cursor += count
+    for current, following in zip(result, result[1:]):
+        current[1] = min(current[1], following[0] - 0.02)
+    if any(end <= start for start, end, _ in result):
+        raise ValueError(f"Invalid caption interval in {scene['id']}")
     return result
 
 
@@ -129,21 +134,31 @@ def graphics(scene, ass):
         ass.add(0, d, "OPUS 5.5 / VIDEO EXPERIMENT", 28, 110, 180, "EC503C")
         ass.add(0.25, d, "一句话，", 132, 100, 290, bold=True)
         ass.add(0.6, d, "十二种「我」。", 132, 100, 455, "EC503C", True)
-        ass.add(1.0, d, "高飞的 AI 视频创作实录", 38, 110, 685)
+        ass.add(1.0, d, "我用 AI，拍了十二种自己", 38, 110, 685)
+        ass.add(1.0, d, "高飞自述 · 本人音色 AI 合成", 27, 110, 760, "A8AEA4")
+    elif kind == "workflow":
+        ass.add(0, d, "我定方向，AI 把想法做出来", 76, 110, 165, bold=True)
+        for index, (label, action) in enumerate([("我给资料", "聊天记录 / 笔记 / 项目 / 头像"),
+                                                ("AI 做样片", "读资料 → 写动画 → 渲染"),
+                                                ("我看效果", "判断像不像我，再给下一轮反馈")]):
+            y = 350 + index * 175
+            ass.add(index * 0.75, d, label, 64, 110, y, "EC503C", True)
+            ass.add(index * 0.75 + 0.25, d, action, 42, 720, y + 13)
     elif kind == "freedom":
-        ass.add(0, d, "时长、画面、声音、配乐、音效", 70, 115, 165, bold=True)
+        ass.add(0, d, "我给 AI 的要求", 32, 115, 112, "A8AEA4")
+        ass.add(0, d, "时长、画面、声音、配乐、音效", 70, 115, 195, bold=True)
         ass.add(0.65, d, "都由你决定", 120, 110, 290, "EC503C", True)
         ass.add(3.8, d, "技术完全自由", 94, 110, 500, bold=True)
         ass.add(4.4, d, "Shader / Canvas / Three.js / CSS 手绘 / Remotion", 37, 115, 640, "A8AEA4")
         ass.add(6.2, d, "需要什么库自己装。", 65, 115, 750, bold=True)
     elif kind == "styles":
-        ass.add(0, d, "风格，是一套贯穿全片的规则", 68, 90, 70, bold=True)
+        ass.add(0, d, "我给每种风格，一套共同的规则", 68, 90, 100, bold=True)
         for index, label in enumerate(["字", "像素冒险", "手账书信", "水墨江城", "快闪", "黑白漫画"]):
             x = 90 + index % 3 * 590
             y = 450 + index // 3 * 390
             ass.add(index * 0.12, d, label, 32, x, y, bold=True)
     elif kind == "feedback":
-        ass.add(0, d, "让反馈，变成下一步动作", 76, 110, 160, bold=True)
+        ass.add(0, d, "我把感受，变成下一步要求", 76, 110, 160, bold=True)
         rows = [("“冲击不够”", "先改 15 秒，检查节奏与音乐"),
                 ("“画面看不清”", "减少元素，让观众一眼看懂"),
                 ("“配音读错”", "逐句转写，只重做没通过的句子")]
@@ -152,20 +167,22 @@ def graphics(scene, ass):
             ass.add(start, d, quote, 48, 110, y, "EC503C", True)
             ass.add(start + 0.25, d, "→  " + action, 44, 640, y + 4)
     elif kind == "method":
-        ass.add(0, d, "把这套方法，带回去", 38, 115, 130, "A8AEA4")
+        ass.add(0, d, "这是我留下的方法", 38, 115, 130, "A8AEA4")
         for index, label in enumerate(["真实素材", "创作自由", "明确反馈"]):
             ass.add(index * 1.2 + 0.3, d, label, 115, 110, 240 + index * 190,
                     "EC503C" if index == 1 else "F1EEE7", True)
-        ass.add(5, d, "你负责判断\n「像不像你」", 63, 1130, 490, "F1EEE7", True)
+        ass.add(5, d, "我负责判断\n「像不像我」", 63, 1130, 490, "F1EEE7", True)
     elif kind == "endcard":
         ass.add(0, d, "把想法做出来", 132, 960, 400, "EC503C", True, align=5)
-        ass.add(0.35, d, "高飞 / Opus 5.5 视频创作实录", 36, 960, 590, align=5)
-        ass.add(0.5, d, "原片与资料：高飞  ·  旁白：AI 合成", 27, 960, 760, "A8AEA4", align=5)
+        ass.add(0.35, d, "我的 Opus 5.5 视频创作实录 / 高飞", 36, 960, 590, align=5)
+        ass.add(0.5, d, "高飞自述  ·  本人音色 AI 合成", 27, 960, 760, "A8AEA4", align=5)
     elif not scene.get("ppt"):
         ass.add(0.15, min(d, 3.6), scene["headline"], 53, 90, 125, bold=True, shadow=2)
     # A restrained, consistent chapter line survives every visual style.
     ass.add(0, d, scene["chapter"], 26, 88, 42, "C6C8C0", animate=False)
-    ass.add(0, d, "高飞 / OPUS 5.5", 24, 1835, 42, "C6C8C0", align=9, animate=False)
+    ass.add(0, d, "我的创作实录 / 高飞", 24, 1835, 42, "C6C8C0", align=9, animate=False)
+    if scene.get("shots") and kind != "title":
+        ass.add(0, d, "我的原片节选 · 保留作品原文", 22, 90, 900, "C6C8C0", animate=False, shadow=2)
 
 
 def make_styles_grid(root, output):
@@ -182,13 +199,13 @@ def prepare(script, args):
     for source in script["scenes"]:
         scene = dict(source)
         scene["lead"] = 0.24 if scene["text"] else 0
-        scene["speechDuration"] = duration(args.root / "voice" / f"{scene['id']}.mp3") if scene["text"] else 0
+        scene["speechDuration"] = duration(args.voice / f"{scene['id']}.mp3") if scene["text"] else 0
         frames = round(scene.get("duration", scene["speechDuration"] + scene["lead"] + 0.26 + scene.get("extra", 0)) * FPS)
         scene.update(frames=frames, duration=frames / FPS, start=elapsed)
         elapsed += scene["duration"]
         if scene.get("graphic") == "title":
             scene["shots"] = [[11, 39]]
-        scene["captions"] = captions(scene, args.root / "voice")
+        scene["captions"] = captions(scene, args.voice)
         if scene["id"] == "hook":
             scene["shotStarts"] = [0] + [next(a for a, _, text in scene["captions"] if text.startswith(phrase))
                                           for phrase in ["水墨长卷", "黑白漫画", "还有冲进屏幕"]]
@@ -277,7 +294,6 @@ def mix_audio(timeline, args):
     total = sum(scene["duration"] for scene in timeline)
     length = round(total * SR)
     voice = np.zeros((length, 2), np.float32)
-    original = np.zeros_like(voice)
     music = np.zeros_like(voice)
     rng = np.random.default_rng(20261029)
 
@@ -312,20 +328,11 @@ def mix_audio(timeline, args):
     for scene in timeline:
         start = scene["start"]
         if scene["text"]:
-            sound = read_audio(args.root / "voice" / f"{scene['id']}.mp3")
+            sound = read_audio(args.voice / f"{scene['id']}.mp3")
             rms = math.sqrt(float(np.mean(sound ** 2)))
             sound *= min(3.0, 0.115 / max(rms, 1e-6))
             sound = np.clip(sound, -0.82, 0.82)
             put(voice, start + scene["lead"], sound)
-        if scene.get("originalAudio") or scene.get("musicSource"):
-            version, source_start = scene.get("musicSource", scene["shots"][0])
-            sound = read_audio(args.media / FILES[version], source_start, scene["duration"])
-            times = np.arange(len(sound)) / SR
-            speech_end = scene["speechDuration"] + scene["lead"]
-            gain = np.interp(times, [0, 0.2, speech_end, speech_end + 0.4, scene["duration"] - 0.2, scene["duration"]], [0, 0.16, 0.16, 0.65, 0.65, 0])
-            put(original, start, sound * gain[:, None])
-            a, b = round(start * SR), round((start + scene["duration"]) * SR)
-            music[a:b] *= 0.08
         if scene["id"] in ["title", "freedom", "rules", "feedback", "method", "endcard"]:
             t = np.arange(round(0.42 * SR)) / SR
             air = rng.normal(0, 1, len(t))
@@ -339,7 +346,7 @@ def mix_audio(timeline, args):
     fade = np.ones(length)
     fade[:SR] = np.linspace(0, 1, SR)
     fade[-2 * SR:] = np.linspace(1, 0, 2 * SR)
-    mixed = voice + (music + original) * fade[:, None]
+    mixed = voice + music * fade[:, None]
     peak = float(np.abs(mixed).max())
     if peak > 0.96:
         mixed *= 0.96 / peak
@@ -353,12 +360,14 @@ def main():
     parser.add_argument("--media", type=Path, required=True, help="Directory containing the twelve original MP4 films")
     parser.add_argument("--build", type=Path, required=True, help="Task-local build directory; assets/pptN.png must be present")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--voice", type=Path, help="Local gaofei narration cache; defaults to <build>/voice")
     parser.add_argument("--only", help="Render selected scene pictures only, comma separated")
     parser.add_argument("--remix-only", action="store_true", help="Reuse pictures after audio-only edits; scene lengths must still match")
     parser.add_argument("--jobs", type=int, default=3)
     args = parser.parse_args()
     args.root = Path(__file__).resolve().parent
     args.media, args.build, args.output = args.media.resolve(), args.build.resolve(), args.output.resolve()
+    args.voice = args.voice.resolve() if args.voice else args.build / "voice"
     (args.build / "shots").mkdir(parents=True, exist_ok=True)
     script = json.loads((args.root / "script.json").read_text())
     make_styles_grid(args.root.parent, args.build / "assets" / "styles.png")

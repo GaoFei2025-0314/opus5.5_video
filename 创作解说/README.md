@@ -1,48 +1,43 @@
-# 一句话，十二种我
+# 一句话，十二种我 · 高飞自述
 
-基于高飞《用 Opus 5.5 做视频》互动 PPT 和 12 支原片制作的中文创作解说。
+基于高飞《用 Opus 5.5 做视频》互动 PPT 和十二支原片制作的第一人称视频。1920×1080，30 fps，H.264 + AAC，烧录中文字幕。
 
-成片约 3 分 19 秒，1920×1080，30 fps，H.264 + AAC，含烧录字幕。旁白采用自然中文男声，明确标注为 AI 合成。片头借用快闪原曲建立节奏，保留了水墨、漫画和快闪片段的原音乐与音效，其余段落使用单独合成的配乐。
+叙述从“我是高飞”和“这些画面讲的，都是我”展开，介绍我怎样提供资料、给 AI 创作自由、确认样片、尝试风格、提出反馈。画面主标题、方法卡和落款统一为第一人称。原片节选保留作品原文，并加“我的原片节选”标记，避免把 AI 对我说的话当成解说者的视角。
 
-剪辑围绕一个问题展开：同一句话为什么能做出十二种不同表达。先展示作品，再讲真实素材、创作自由、样片、声音与画面的逐轮迭代、反馈和可复用的方法。核心提示词在画面完整展示，技术名称保留正式拼写。
+全片解说调用项目中已有的 ElevenLabs `gaofei` 克隆音色（`eleven_v3`），沿用原工程速度 1.2 与稳定度 0.5。用户已要求使用其本人音色；无需新建克隆、上传录音或修改账号。片头和片尾均披露“本人音色 AI 合成”，不称为本人现场录音。原片音轨全部静音，使用本工程单独合成的配乐与转场声，不混入女声或旧纪录片男声。
 
-## 文件
+## 文件与本地保留
 
-- `导演稿.md`：中文旁白与创作意图。
-- `script.json`：21 个段落的旁白、标题、原片编号和截取位置。
-- `voice/`：20 段已生成的配音、词级时间标记与缓存信息，便于离线重剪。
-- `make_voice.py`：仅在文字或音色改动后重新生成对应旁白；当前为 `zh-CN-YunxiNeural`。
-- `capture_ppt.cjs`：截取原演示第 4、6、10 页的画布。
-- `render.py`：按实际配音长度建立时间轴，剪辑原片、加入动态文字与字幕，混音并输出 MP4。
+- `script.json`：21 段第一人称文案、画面标题、原片编号和截取位置，含用户已配置的音色 ID（不是密钥）。
+- `导演稿.md`：与脚本一致的可读旁白稿。
+- `make_voice.py`：按文字、音色和参数缓存配音，生成音频与服务返回的逐字时间戳。
+- `render.py`：按实际音频重新计算镜头时长、字幕、动态标题及混音，输出成片。
+- `capture_ppt.cjs`：用独立的无头浏览器截取 PPT 第 4、6、10 页，完成后关闭自身浏览器。
+- `requirements.txt`：本地视频制作所需 Python 库；配音请求只使用 Python 标准库。
+- `验收记录.md`：当前版本的成片和验证证据。
+- `voice/`：上一版本已入库的通用男声缓存，保留既有路径；本次不使用，也不向此目录写入本人音色。
 
-最终视频与字幕输出到用户工程的 `out/`，原片与视频中间文件不重复提交到仓库。原项目的代码、原片与演示稿均保持原样。
+新的个人音色结果保存在被忽略的 `<build>/voice/`，每段一份 MP3 和一份包含文字、逐字时间及缓存指纹的 JSON。本地保留，避免二次调用费用；不提交到 Git。原始影片和人工素材仍位于用户原工作区，保持原路径，不批量移动或删除。`build/` 中还保留 ASS、混音、字幕、审查和画面缓存；`out/` 保留可直接使用的成片。
 
 ## 重新制作
 
-需要 Python 3（NumPy、SciPy、Pillow），FFmpeg/FFprobe，以及可用的中文字体。当前导出使用 macOS 的 Hiragino Sans GB，换系统时可修改 `render.py` 的 `FONT`。首次生成配音需要网络和 `edge-tts`；使用本目录缓存配音渲染时不需要配音服务。PPT 截图使用 Playwright，可使用已有 Chrome。
-
-从仓库根目录运行，按实际位置填写原片目录和构建目录：
+使用现有 Python 环境（NumPy、SciPy、Pillow），以及 FFmpeg/FFprobe。中文字体默认为 macOS Hiragino Sans GB。给配音进程配置 `ELEVENLABS_API_KEY` 环境变量；脚本不读取密钥文件、不输出密钥。命中音频缓存后不调用配音服务。
 
 ```sh
-# 在任务的独立 Python 环境中安装 requirements.txt，或使用已有可用环境。
-python3 创作解说/make_voice.py
+python3 创作解说/make_voice.py --out /path/to/build/intro-film/voice
 
-# Playwright 未安装到 Node 的正常搜索路径时，设置 PLAYWRIGHT_MODULE 指向已有包。
-# 使用已有 Chrome 时，可设置 CHROME_PATH 指向其可执行文件。
+# 首次没有 PPT 截图时运行。需要 Playwright 与已有的 Chrome。
 node 创作解说/capture_ppt.cjs /path/to/build/intro-film/assets
 
 python3 创作解说/render.py \
   --media /path/to/original/out \
   --build /path/to/build/intro-film \
-  --output /path/to/out/一句话十二种我-Opus5.5创作解说.mp4
+  --voice /path/to/build/intro-film/voice \
+  --output /path/to/out/一句话十二种我-第一人称本人音色.mp4
 ```
 
-构建目录包含 `timeline.json`、`captions.srt`、逐段的 ASS 动态文字、画面片段、旁白声轨与混音。`--only title,freedom,comic` 可先出指定片段检查画面，`--jobs` 控制同时编码的段数。
+`make_voice.py --only hook,title` 可先生成短样片；`--force --only <id>` 只重做审查未通过的段落。渲染的 `--only title,freedom` 只输出指定片段；`--remix-only` 在时长未变时复用画面。字幕直接使用服务返回的逐字时间。渲染会拒绝文案不匹配或音色不是 gaofei 的缓存。
 
-旁白通过服务返回的词级时间建立字幕，而非按字数平均分配。音量检查目标为约 -16 LUFS，真峰值不高于 -1.5 dBTP；编码前保留 -2.2 dBTP 的余量，避免 AAC 编码产生的峰值过冲。最后统一编码为 BT.709、limited range，避免原片和 PPT 截图的色彩范围不同导致播放器反复切换。
+配音接口依据：[ElevenLabs 带时间戳合成文档](https://elevenlabs.io/docs/api-reference/text-to-speech/convert-with-timestamps)。语义检查使用项目既有的 Scribe 工作流，自动转写不等同于本人对音色相似度的认可。
 
-## 内容依据与边界
-
-所有作品片段、截图、头像和创作过程均来自用户提供的工程及 PPT。叙述为项目复盘，没有加入制作耗时、收益、模型性能或“一句话必然生成成片”等未经核实的承诺。使用 AI 旁白介绍高飞的创作，不将合成声音标为本人录音。
-
-旁白使用可用的中文神经网络男声。已将本片的配音结果与时间标记缓存到 voice/，无需配音账户密钥即可离线重剪。
+输出统一为 BT.709 limited range；混音目标约 -16 LUFS，编码前预留 -2.2 dBTP 余量。成片后再完整解码并测量实际 AAC 真峰值。
