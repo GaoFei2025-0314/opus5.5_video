@@ -1,0 +1,10 @@
+# Render products and personal voice caches stay local.
+/build/
+/out/
+.venv/
+node_modules/
+__pycache__/
+*.pyc
+.env
+.env.*
+.DS_Store
