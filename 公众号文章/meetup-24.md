@@ -14,6 +14,10 @@
 
 这次分享里，他也报了自己的用量：当时用的是每月 20 美元的基础订阅，做这组片子，大约用了两三个 5 小时额度窗口。这是他对订阅用量的回忆；要复刻双声版，克隆音色还要单独准备。
 
+![12 个版本成片截图总览](images/twelve-versions-overview.jpg)
+
+*V1～V12 成片截图总览，按创作顺序排列。*
+
 ## 一、四步走：先让它选，再说你喜欢什么
 
 **第一步，把问题和资料一起给它。** 高飞让 Claude Code 读取自己选好的记录、笔记和项目，只提一个问题：「在你的视角里，我是一个什么样的人？」时长、画面、声音，都交给它。第一次尝试的人也不用先攒五个月：挑一段印象深的对话、一句你真的说过的话，再放一个做过的作品，就有了一个短镜头的材料。
@@ -55,6 +59,82 @@ Claude 在片子里说他：「你是一个很难被糊弄的人。」它自己�
 反过来，如果你最想要的是演员转头时脸上的光、一条雨后像实拍的街，他会先试**像素生成**，让视频模型直接生成镜头。它擅长给出这样的质感，代价是下次生成时，别的细节也可能一起变。高飞把反复试到满意比作「抽卡」。
 
 选哪条路，可以先问自己：**如果只许改这一处，其他地方必须原样保留吗？** 如果答案是「必须」，先试代码；如果最在意的是一个镜头看上去像真的，先试生成画面。两条路都可以拿同一段几秒钟的样片来判断。高飞也用同一条提示词试过 Claude 和 GPT-6a；就那一次的成片，他更喜欢 Claude。换成你手里的素材，不妨也并排看一眼，再决定用谁。
+
+## 十二个版本，一版一张 GIF
+
+每版各选了一段原片做成 GIF，方便逐一看画面和动作。V1～V4 主要在声音上迭代，GIF 无声，点击对应的 B 站原片可以试听旁白差异。
+
+### V1 · 文字与配乐
+
+![V1 文字与配乐的原片动图](images/v1-typed-stats.gif)
+
+*文字与原创配乐 · 约 00:16 起。[观看 V1 原片](https://www.bilibili.com/video/BV1U4pL6JELk/)*
+
+### V2 · 女声旁白
+
+![V2 女声旁白的原片动图](images/v2-narration.gif)
+
+*女声讲述 · 约 01:16 起。[观看 V2 原片](https://www.bilibili.com/video/BV1t4pL6JEkr/)*
+
+### V3 · 双声对话
+
+![V3 双声对话的原片动图](images/v3-dialogue.gif)
+
+*女声与我的克隆音色 · 约 01:26 起。[观看 V3 原片](https://www.bilibili.com/video/BV1U4pL6JEsU/)*
+
+### V4 · 男声旁白
+
+![V4 男声旁白的原片动图](images/v4-narration.gif)
+
+*男声与我的克隆音色 · 约 05:04 起。[观看 V4 原片](https://www.bilibili.com/video/BV1m4pL6JEmC/)*
+
+### V5 · 点线面体
+
+![V5 点线面体的原片动图](images/v5-dimensions.gif)
+
+*2D 与 3D 转换 · 约 00:56 起。[观看 V5 原片](https://www.bilibili.com/video/BV1t4pL6JEdG/)*
+
+### V6 · 宏伟预告片
+
+![V6 宏伟预告片的原片动图](images/v6-galaxy.gif)
+
+*星系与史诗节拍 · 约 00:12 起。[观看 V6 原片](https://www.bilibili.com/video/BV1b4pL6nEVJ/)*
+
+### V7 · 字
+
+![V7 字的原片动图](images/v7-type-portrait.gif)
+
+*字构成整幅画像 · 约 03:26 起。[观看 V7 原片](https://www.bilibili.com/video/BV1jPYF6jE6j/)*
+
+### V8 · 像素冒险
+
+![V8 像素冒险的原片动图](images/v8-level-up.gif)
+
+*RPG 与经验值 · 约 00:37 起。[观看 V8 原片](https://www.bilibili.com/video/BV1U4pL6JEsH/)*
+
+### V9 · 见字如面
+
+![V9 见字如面的原片动图](images/v9-sketch.gif)
+
+*手写信与铅笔速写 · 约 00:17 起。[观看 V9 原片](https://www.bilibili.com/video/BV1t4pL6JEoR/)*
+
+### V10 · 江城
+
+![V10 江城的原片动图](images/v10-ink-lakes.gif)
+
+*水墨长卷与古琴 · 约 00:58 起。[观看 V10 原片](https://www.bilibili.com/video/BV1t4pL6JEn8/)*
+
+### V11 · 快闪
+
+![V11 快闪的原片动图](images/v11-flash.gif)
+
+*点线面体随音乐变换 · 约 00:36 起。[观看 V11 原片](https://www.bilibili.com/video/BV1t4pL6JEUc/)*
+
+### V12 · 黑白漫画
+
+![V12 黑白漫画的原片动图](images/v12-comic-reply.gif)
+
+*网点漫画与翻页 · 约 00:46 起。[观看 V12 原片](https://www.bilibili.com/video/BV1t4pL6JEnD/)*
 
 ## 从哪一版看起？
 
