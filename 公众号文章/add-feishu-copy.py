@@ -43,7 +43,7 @@ def update_html(source, url, script):
         '<div class="feishu-actions"><button type="button">复制到飞书</button>'
         f'<a href="{escape(url, quote=True)}" target="_blank" rel="noopener noreferrer">打开飞书文档 ↗</a></div>'
         '<p role="status" aria-live="polite">先复制图文，再打开飞书文档，点击正文位置，按 ⌘V / Ctrl+V 粘贴。</p>'
-        '<p>包含正文、配图、12 版 GIF 和作品链接。粘贴后请检查 GIF 是否显示，图片较多需等待上传。</p>'
+        '<p>包含正文、代表性 GIF、12 版截图总览和作品链接。粘贴后请检查 GIF 是否显示，图片较多需等待上传。</p>'
         '</aside><script>' + script + '</script>' + END
     )
     return source[:main.end()] + block + source[main.end():]
